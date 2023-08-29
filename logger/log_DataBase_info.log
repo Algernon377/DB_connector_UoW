@@ -1,0 +1,11 @@
+2023-08-29 09:56:19,813 - ERROR - data did not save from DB
+(psycopg2.errors.UndefinedFunction) ОШИБКА:  оператор не существует: character varying = integer
+LINE 3: WHERE users.user_id = 828093617
+                            ^
+HINT:  Оператор с данными именем и типами аргументов не найден. Возможно, вам следует добавить явные приведения типов.
+
+[SQL: SELECT users.user_id 
+FROM users 
+WHERE users.user_id = %(user_id_1)s]
+[parameters: {'user_id_1': 828093617}]
+(Background on this error at: https://sqlalche.me/e/20/f405)

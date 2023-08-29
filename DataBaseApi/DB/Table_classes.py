@@ -29,7 +29,7 @@ class UsersTable(Base):
     date_registration: Mapped[DateTime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     role: Mapped[Optional[str]]= mapped_column(String(200))
 
-    stop_work = relationship("StopWorkTable", back_populates="users", overlaps="stop_work")
+    # stop_work = relationship("StopWorkTable", back_populates="users", overlaps="stop_work")
 
     # def __repr__(self) -> str:
     #     return f"User(id={self.user_id}, username={self.username}, city={self.city},date_registration={self.date_registration}, role={self.role})"
@@ -43,19 +43,21 @@ class StopWorkTable(Base):
     __tablename__ = 'stop_work'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    city: Mapped[str]= mapped_column(String(100))
+    city: Mapped[str] = mapped_column(String(100))
     object: Mapped[str] = mapped_column(String(200))
+    position: Mapped[str] = mapped_column(String(10))
+    queue: Mapped[str] = mapped_column(String(10))
     number_bk: Mapped[str] = mapped_column(String(100))
     cause_stop: Mapped[str] = mapped_column(String(200))
-    info_cause: Mapped[Optional[str]] = mapped_column(String(200))
-    user_id_stop_work: Mapped[str] = mapped_column(String(50), ForeignKey('users.user_id'))
-    user_id_continued_work: Mapped[str] = mapped_column(String(50))
-    time_stop_work: Mapped[datetime]
-    time_continued_work: Mapped[datetime]
-    total_time_not_work: Mapped[datetime]
-    note: Mapped[str]
+    cause_info: Mapped[Optional[str]] = mapped_column(String(200))
+    user_id_stop_work: Mapped[str] = mapped_column(String(50))
+    user_id_continued_work: Mapped[Optional[str]] = mapped_column(String(50))
+    time_stop_work: Mapped[Optional[datetime]]
+    time_continued_work: Mapped[Optional[datetime]]
+    total_time_not_work: Mapped[Optional[int]]
+    note: Mapped[Optional[str]]
 
-    users = relationship("UsersTable", back_populates="stop_work", overlaps="stop_work")
+    # users = relationship("UsersTable", back_populates="stop_work", overlaps="stop_work")
 
 
 
