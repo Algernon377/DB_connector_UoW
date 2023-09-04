@@ -27,7 +27,7 @@ class UsersTable(Base):
     username: Mapped[Optional[str]] = mapped_column(String(250))
     city: Mapped[Optional[str]] = mapped_column(String(100))
     date_registration: Mapped[DateTime] = mapped_column(DateTime(timezone=True), server_default=func.now())
-    role: Mapped[Optional[str]]= mapped_column(String(200))
+    role: Mapped[Optional[str]] = mapped_column(String(200))
 
     # stop_work = relationship("StopWorkTable", back_populates="users", overlaps="stop_work")
 

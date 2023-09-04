@@ -8,7 +8,8 @@ app = FastAPI(title="DataBaseApi")
 origins = [
     "http://localhost",
     "http://localhost:8080",
-    "http://localhost:5000"]
+    "http://localhost:5000",
+    "http://127.1.1.1:5000"]
 
 app.include_router(BasicUrls.router)
 app.add_middleware(

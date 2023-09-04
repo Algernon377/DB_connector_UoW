@@ -119,11 +119,11 @@ class DB_connector:
             where_dict: dict|None = None,
             limit: int|None = None) -> list|bool:
         '''
-
-        :param name_table:
-        :param name_columns_tuple:
-        :param where_dict:
-        :return:
+        Возвращает данные из БД
+        :param name_table: таблица к которой идет запрос
+        :param name_columns_tuple: название запрашиваемых столбцов (<имя столбца>, <имя столбца> ...)
+        :param where_dict: условия отбора {<имя столбца>: <значение столбца> ...}
+        :return: [(),()...]
         '''
         table_obj = all_table_dict.get(name_table)
         stmt = select(table_obj)

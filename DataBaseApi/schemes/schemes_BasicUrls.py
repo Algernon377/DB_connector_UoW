@@ -10,7 +10,7 @@ TableName = Enum("TableName", {table: table for table in all_table_dict})
 
 
 class RequestGet(BaseModel):
-    name_columns_tuple: Tuple[str]
+    name_columns_tuple: Tuple
     where_dict: Optional[Dict] = None
     limit: Optional[int] = None
 

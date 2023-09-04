@@ -9,3 +9,10 @@ FROM users
 WHERE users.user_id = %(user_id_1)s]
 [parameters: {'user_id_1': 828093617}]
 (Background on this error at: https://sqlalche.me/e/20/f405)
+2023-08-29 17:30:50,464 - ERROR - data did not save from DB
+(psycopg2.errors.UniqueViolation) ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "users_pkey"
+DETAIL:  Ключ "(user_id)=(828093617)" уже существует.
+
+[SQL: INSERT INTO users (user_id, username, city, role) VALUES (%(user_id)s, %(username)s, %(city)s, %(role)s) RETURNING users.date_registration]
+[parameters: {'user_id': '828093617', 'username': 'Algernon_LeX', 'city': None, 'role': None}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
