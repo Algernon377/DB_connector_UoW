@@ -40,3 +40,42 @@ __enter__
 __enter__
 2023-09-12 21:41:35,570 - ERROR - connect from DB error
 __enter__
+2023-09-14 17:42:02,547 - ERROR - Сработал rollback. Данные не были сохранены в БД 
+
+2023-09-14 17:43:35,678 - ERROR - Сработал rollback. Данные не были сохранены в БД 
+
+2023-09-14 17:44:07,137 - ERROR - Сработал rollback. Данные не были сохранены в БД 
+
+2023-09-14 17:44:39,100 - ERROR - Функция find_many в слое repository. Ошибка получения данных из БД или применении фильтров 
+sqlalchemy.sql.selectable.Select.filter_by() argument after ** must be a mapping, not StopWorkGetSchema
+
+2023-09-14 17:44:39,102 - ERROR - Сработал rollback. Данные не были сохранены в БД 
+
+2023-09-14 17:51:01,719 - ERROR - Функция find_many в слое service. Ошибка получения данных 
+'StopWorkGetSchema' object has no attribute 'filters'
+
+2023-09-14 17:51:02,127 - ERROR - Сработал rollback. Данные не были сохранены в БД 
+
+2023-09-14 17:51:31,245 - ERROR - Функция find_many в слое service. Ошибка получения данных 
+'StopWorkGetSchema' object has no attribute 'filters'
+
+2023-09-14 17:51:35,204 - ERROR - Сработал rollback. Данные не были сохранены в БД 
+
+2023-09-14 17:51:47,378 - ERROR - Функция find_many в слое service. Ошибка получения данных 
+'StopWorkGetSchema' object has no attribute 'filters'
+
+2023-09-14 17:51:47,381 - ERROR - Сработал rollback. Данные не были сохранены в БД 
+
+2023-09-14 17:52:00,810 - ERROR - Функция find_many в слое service. Ошибка получения данных 
+'StopWorkGetSchema' object has no attribute 'filters'
+
+2023-09-14 17:52:00,814 - ERROR - Сработал rollback. Данные не были сохранены в БД 
+
+2023-09-14 17:53:31,761 - ERROR - Сработал rollback. Данные не были сохранены в БД 
+
+2023-09-14 17:54:03,828 - ERROR - Сработал rollback. Данные не были сохранены в БД 
+
+2023-09-14 17:54:35,582 - ERROR - Сработал rollback. Данные не были сохранены в БД 
+
+2023-09-14 17:55:52,627 - ERROR - Сработал rollback. Данные не были сохранены в БД 
+

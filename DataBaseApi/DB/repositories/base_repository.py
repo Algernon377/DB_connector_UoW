@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-
+from logger.logger_bot import logger
 from pydantic import BaseModel
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -44,7 +44,12 @@ class SQLAlchemyRepository(AbstractRepository):
         :param values: Объект класса модели БД
         :return:
         """
-        self.session.add(values)
+        try:
+            self.session.add(values)
+            return True
+        except Exception as ex:
+            logger.error(f'Функция add_one в слое repository. Ошибка добавления данных в БД  \n{ex}\n')
+            return False
 
     async def add_many(self, values: list):
         """
@@ -52,7 +57,12 @@ class SQLAlchemyRepository(AbstractRepository):
         :param values: Список из объектов моделей.
         :return:
         """
-        self.session.add_all(values)
+        try:
+            self.session.add_all(values)
+            return True
+        except Exception as ex:
+            logger.error(f'Функция add_many в слое repository. Ошибка добавления данных в БД \n{ex}\n')
+            return False
 
     async def update(self, values: dict, filters: dict | None):
         """
@@ -61,10 +71,15 @@ class SQLAlchemyRepository(AbstractRepository):
         :param filters: dict с фильтрами {<название столбца>:<значение столбца>}
         :return:
         """
-        stmt = update(self.model).values(**values).returning(self.model.id)
-        if filters:
-            stmt = stmt.filter_by(**filters)
-        response_db = await self.session.execute(stmt)
+        try:
+            stmt = update(self.model).values(**values).returning(self.model.id)
+            if filters:
+                stmt = stmt.filter_by(**filters)
+
+            response_db = await self.session.execute(stmt)
+        except Exception as ex:
+            logger.error(f'Функция update в слое repository. Ошибка обновления данных в БД \n{ex}\n')
+            return False
         return response_db.all()
 
     async def find_all(self):
@@ -72,9 +87,13 @@ class SQLAlchemyRepository(AbstractRepository):
         Взятие всех значений из БД
         :return:
         """
-        stmt = select(self.model)
-        res = await self.session.execute(stmt)
-        res = [row[0].to_read_model() for row in res.all()]
+        try:
+            stmt = select(self.model)
+            res = await self.session.execute(stmt)
+            res = [row[0].to_read_model() for row in res.all()]
+        except Exception as ex:
+            logger.error(f'Функция find_all в слое repository. Ошибка получения данных из БД или преобразовании из \n{ex}\n')
+            return False
         return res
 
     async def find_many(self, filters: dict | None):
@@ -83,9 +102,13 @@ class SQLAlchemyRepository(AbstractRepository):
         :param filters: dict с фильтрами {<название столбца>:<значение столбца>}
         :return:
         """
-        stmt = select(self.model)
-        if filters:
-            stmt = stmt.filter_by(**filters)
-        res = await self.session.execute(stmt)
-        res = [row[0].to_read_model() for row in res.all()]
+        try:
+            stmt = select(self.model)
+            if filters:
+                stmt = stmt.filter_by(**filters)
+            res = await self.session.execute(stmt)
+            res = [row[0].to_read_model() for row in res.all()]
+        except Exception as ex:
+            logger.error(f'Функция find_many в слое repository. Ошибка получения данных из БД или применении фильтров \n{ex}\n')
+            return False
         return res

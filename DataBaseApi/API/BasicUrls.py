@@ -22,7 +22,7 @@ async def get_all():
 
 
 @router.post("/stop_work/get_many", response_model=StopWorkGetResponse)
-async def get_all(filters: StopWorkGetSchema | None):
+async def get_many(filters: StopWorkGetSchema | None):
     async with UnitOfWork(async_session_maker) as uow:
         response_by_db = await StopWorkService(StopWorkRepository(uow.session)).find_many(filters)
 

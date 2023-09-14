@@ -24,7 +24,7 @@ class StopWorkSchema(BaseModel):
         from_attributes = True
 
 class StopWorkGetSchema(BaseModel):
-    filters: Dict
+    filters_dict: Dict
 
 
 class StopWorkAddSchema(BaseModel):

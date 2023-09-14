@@ -1,4 +1,5 @@
 from DataBaseApi.DB.repositories.base_repository import AbstractRepository
+from logger.logger_bot import logger
 
 
 class BaseService:
@@ -10,5 +11,10 @@ class BaseService:
         return rows
 
     async def find_many(self, filters):
+        try:
+            filters = filters.filters_dict
+        except Exception as ex:
+            logger.error(f'Функция find_many в слое service. Ошибка получения данных \n{ex}\n')
+            return False
         rows = await self.repository.find_many(filters)
         return rows
