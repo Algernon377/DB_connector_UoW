@@ -1,8 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
-from DataBaseApi.Routers import BasicUrls
+from DataBaseApi.API import BasicUrls
 from fastapi.middleware.cors import CORSMiddleware
-
 
 app = FastAPI(title="DataBaseApi")
 origins = [
@@ -19,7 +18,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 if __name__ == "__main__":
     uvicorn.run(app, host='127.1.1.1', port=5000)

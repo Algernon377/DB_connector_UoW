@@ -1,3 +1,6 @@
+from logger.logger_bot import logger
+
+
 class UnitOfWork:
     def __init__(self, session_factory):
         self.session_factory = session_factory
@@ -9,6 +12,7 @@ class UnitOfWork:
     async def __aexit__(self, *args):
         await self.rollback()
         await self.session.close()
+        logger.error(f'Сработал rollback. Данные не были сохранены в БД \n')
 
     async def commit(self):
         await self.session.commit()
@@ -16,4 +20,3 @@ class UnitOfWork:
 
     async def rollback(self):
         await self.session.rollback()
-

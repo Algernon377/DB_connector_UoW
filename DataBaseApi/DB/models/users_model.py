@@ -1,4 +1,4 @@
-from DataBaseApi.DB.models.main_base_model import Base
+from DataBaseApi.DB.models.base_model import Base
 from DataBaseApi.DB.schemas.users_schemas import UsersSchema
 from sqlalchemy import String, DateTime
 from sqlalchemy.sql import func

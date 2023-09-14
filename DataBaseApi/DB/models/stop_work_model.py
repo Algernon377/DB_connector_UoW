@@ -1,6 +1,6 @@
 import datetime
 
-from DataBaseApi.DB.models.main_base_model import Base
+from DataBaseApi.DB.models.base_model import Base
 from DataBaseApi.DB.schemas.stop_work_schemas import StopWorkSchema
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
@@ -27,7 +27,7 @@ class StopWorkModel(Base):
     user_id_stop_work: Mapped[str] = mapped_column(String(50))
     user_id_continued_work: Mapped[Optional[str]] = mapped_column(String(50))
     time_stop_work: Mapped[Optional[DateTime]] = mapped_column(DateTime(timezone=True), server_default=func.now())
-    time_continued_work: Mapped[Optional[datetime.datetime]]
+    time_continued_work: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime(timezone=True))
     total_time_not_work: Mapped[Optional[int]]
     note: Mapped[Optional[str]]
 
