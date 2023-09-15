@@ -6,7 +6,12 @@ from logger.logger_bot import logger
 
 class StopWorkService(BaseService):
 
-    async def add_one(self, stop_work_data: StopWorkAddSchema):
+    async def add_one(self, stop_work_data: StopWorkAddSchema) -> StopWorkModel | bool:
+        """
+        Добавляет объект в БД
+        :param stop_work_data:
+        :return: Возвращает или объект модели или False
+        """
         try:
             stop_work_dict = stop_work_data.model_dump()
             stop_work_obj = StopWorkModel(**stop_work_dict)
@@ -19,7 +24,12 @@ class StopWorkService(BaseService):
             return stop_work_obj
         return False
 
-    async def add_many(self, list_stop_work_data: StopWorkAddManySchema):
+    async def add_many(self, list_stop_work_data: StopWorkAddManySchema) -> list[StopWorkModel] | bool:
+        """
+        Добавляет объекты в БД
+        :param list_stop_work_data: list с объектами модели
+        :return: Возвращает или список объектов модели или False
+        """
         try:
             stop_work_list = [StopWorkModel(**_.model_dump()) for _ in list_stop_work_data.list_obj]
         except Exception as ex:
@@ -31,8 +41,12 @@ class StopWorkService(BaseService):
             return stop_work_list
         return False
 
-
-    async def update(self, list_stop_work_data: StopWorkUpdateSchema):
+    async def update(self, list_stop_work_data: StopWorkUpdateSchema) -> list | bool:
+        """
+        Обновляет объекты в БД
+        :param list_stop_work_data:
+        :return: Возвращает список объектов или false в случае ошибки
+        """
         try:
             filters = list_stop_work_data.filters
             update_data = list_stop_work_data.value

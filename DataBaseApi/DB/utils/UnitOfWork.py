@@ -12,7 +12,7 @@ class UnitOfWork:
     async def __aexit__(self, *args):
         await self.rollback()
         await self.session.close()
-        logger.error(f'Сработал rollback. Данные не были сохранены в БД \n')
+        # logger.error(f'Сработал rollback. Данные не были сохранены в БД \n')
 
     async def commit(self):
         await self.session.commit()

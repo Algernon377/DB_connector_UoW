@@ -38,7 +38,7 @@ class SQLAlchemyRepository(AbstractRepository):
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    async def add_one(self, values: BaseModel):
+    async def add_one(self, values: BaseModel) -> bool:
         """
         Добавление одной новой записи в БД
         :param values: Объект класса модели БД
@@ -51,7 +51,7 @@ class SQLAlchemyRepository(AbstractRepository):
             logger.error(f'Функция add_one в слое repository. Ошибка добавления данных в БД  \n{ex}\n')
             return False
 
-    async def add_many(self, values: list):
+    async def add_many(self, values: list) -> bool:
         """
         Добавление множества значений в БД
         :param values: Список из объектов моделей.
@@ -64,7 +64,7 @@ class SQLAlchemyRepository(AbstractRepository):
             logger.error(f'Функция add_many в слое repository. Ошибка добавления данных в БД \n{ex}\n')
             return False
 
-    async def update(self, values: dict, filters: dict | None):
+    async def update(self, values: dict, filters: dict | None) -> list | bool:
         """
         Обновление данных в БД
         :param values: dict с меняемыми значениями {<название столбца>:<новое значение столбца>}
@@ -82,10 +82,10 @@ class SQLAlchemyRepository(AbstractRepository):
             return False
         return response_db.all()
 
-    async def find_all(self):
+    async def find_all(self) -> list | bool:
         """
         Взятие всех значений из БД
-        :return:
+        :return: возвращает список объектов
         """
         try:
             stmt = select(self.model)
@@ -96,11 +96,11 @@ class SQLAlchemyRepository(AbstractRepository):
             return False
         return res
 
-    async def find_many(self, filters: dict | None):
+    async def find_many(self, filters: dict | None) -> list | bool:
         """
         Взятие значений из БД по фильтрам
         :param filters: dict с фильтрами {<название столбца>:<значение столбца>}
-        :return:
+        :return: возвращает список объектов
         """
         try:
             stmt = select(self.model)
