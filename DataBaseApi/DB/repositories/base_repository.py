@@ -69,7 +69,7 @@ class SQLAlchemyRepository(AbstractRepository):
         Обновление данных в БД
         :param values: dict с меняемыми значениями {<название столбца>:<новое значение столбца>}
         :param filters: dict с фильтрами {<название столбца>:<значение столбца>}
-        :return:
+        :return: Возвращает список с кортежами id который обновлялись [(<id>,), (<id>,)] False в случае ошибки
         """
         try:
             stmt = update(self.model).values(**values).returning(self.model.id)

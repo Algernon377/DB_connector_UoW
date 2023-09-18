@@ -45,7 +45,7 @@ class UsersService(BaseService):
         """
         Обновляет объекты в БД
         :param list_users_data:
-        :return: Возвращает список объектов или false в случае ошибки
+        :return: Возвращает список с кортежами id который обновлялись [(<id>,), (<id>,)] False в случае ошибки
         """
         try:
             filters = list_users_data.filters
