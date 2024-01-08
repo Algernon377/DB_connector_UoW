@@ -49,7 +49,7 @@ class SQLAlchemyRepository(AbstractRepository):
             return True
         except Exception as ex:
             logger.error(f'Функция add_one в слое repository. Ошибка добавления данных в БД  \n{ex}\n')
-            return False
+            raise ConnectionError(f"func add_one in repository. Error get data in DB {ex}")
 
     async def add_many(self, values: list) -> bool:
         """
@@ -62,9 +62,9 @@ class SQLAlchemyRepository(AbstractRepository):
             return True
         except Exception as ex:
             logger.error(f'Функция add_many в слое repository. Ошибка добавления данных в БД \n{ex}\n')
-            return False
+            raise ConnectionError(f"func add_many in repository. Error get data in DB {ex}")
 
-    async def update(self, values: dict, filters: dict | None) -> list | bool:
+    async def update(self, values: dict, filters: dict | None) -> list:
         """
         Обновление данных в БД
         :param values: dict с меняемыми значениями {<название столбца>:<новое значение столбца>}
@@ -79,10 +79,10 @@ class SQLAlchemyRepository(AbstractRepository):
             response_db = await self.session.execute(stmt)
         except Exception as ex:
             logger.error(f'Функция update в слое repository. Ошибка обновления данных в БД \n{ex}\n')
-            return False
+            raise ConnectionError(f"func update in repository. Error get data in DB {ex}")
         return response_db.all()
 
-    async def find_all(self) -> list | bool:
+    async def find_all(self) -> list:
         """
         Взятие всех значений из БД
         :return: возвращает список объектов
@@ -93,10 +93,10 @@ class SQLAlchemyRepository(AbstractRepository):
             res = [row[0].to_read_model() for row in res.all()]
         except Exception as ex:
             logger.error(f'Функция find_all в слое repository. Ошибка получения данных из БД или преобразовании из \n{ex}\n')
-            return False
+            raise ConnectionError(f"func find_all in repository. Error get data in DB {ex}")
         return res
 
-    async def find_many(self, filters: dict | None) -> list | bool:
+    async def find_many(self, filters: dict | None) -> list:
         """
         Взятие значений из БД по фильтрам
         :param filters: dict с фильтрами {<название столбца>:<значение столбца>}
@@ -110,5 +110,5 @@ class SQLAlchemyRepository(AbstractRepository):
             res = [row[0].to_read_model() for row in res.all()]
         except Exception as ex:
             logger.error(f'Функция find_many в слое repository. Ошибка получения данных из БД или применении фильтров \n{ex}\n')
-            return False
+            raise ConnectionError(f"func find_many in repository. Error get data in DB {ex}")
         return res
