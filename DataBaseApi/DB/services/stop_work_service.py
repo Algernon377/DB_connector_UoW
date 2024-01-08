@@ -17,12 +17,11 @@ class StopWorkService(BaseService):
             stop_work_obj = StopWorkModel(**stop_work_dict)
         except Exception as ex:
             logger.error(f'Функция add_one в слое service. Ошибка получения данных \n{ex}\n')
-            return False
+            raise ValueError(f"func add_one in service. Error get data in schema \n{ex}\n")
 
-        resp = await self.repository.add_one(stop_work_obj)
-        if resp:
-            return stop_work_obj
-        return False
+        await self.repository.add_one(stop_work_obj)
+        return stop_work_obj
+
 
     async def add_many(self, list_stop_work_data: StopWorkAddManySchema) -> list[StopWorkModel] | bool:
         """
@@ -34,12 +33,10 @@ class StopWorkService(BaseService):
             stop_work_list = [StopWorkModel(**_.model_dump()) for _ in list_stop_work_data.list_obj]
         except Exception as ex:
             logger.error(f'Функция add_many в слое service. Ошибка получения данных \n{ex}\n')
-            return False
+            raise ValueError(f"func add_many in service. Error get data in schema \n{ex}\n")
 
-        resp = await self.repository.add_many(stop_work_list)
-        if resp:
-            return stop_work_list
-        return False
+        await self.repository.add_many(stop_work_list)
+        return stop_work_list
 
     async def update(self, list_stop_work_data: StopWorkUpdateSchema) -> list | bool:
         """
@@ -52,7 +49,7 @@ class StopWorkService(BaseService):
             update_data = list_stop_work_data.value
         except Exception as ex:
             logger.error(f'Функция update в слое service. Ошибка получения данных \n{ex}\n')
-            return False
+            raise ValueError(f"func update in service. Error get data in schema \n{ex}\n")
 
         response_db = await self.repository.update(update_data, filters)
         return response_db

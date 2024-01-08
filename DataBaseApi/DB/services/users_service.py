@@ -17,12 +17,11 @@ class UsersService(BaseService):
             users_obj = UsersModel(**users_dict)
         except Exception as ex:
             logger.error(f'Функция add_one в слое service. Ошибка получения данных \n{ex}\n')
-            return False
+            raise ValueError(f"func add_one in service. Error get data in schema \n{ex}\n")
 
-        user_id = await self.repository.add_one(users_obj)
-        if user_id:
-            return user_id
-        return False
+        await self.repository.add_one(users_obj)
+        return users_obj
+
 
     async def add_many(self, list_users_data: UsersAddManySchema) -> list[UsersModel] | bool:
         """
@@ -34,12 +33,10 @@ class UsersService(BaseService):
             users_list = [UsersModel(**_.model_dump()) for _ in list_users_data.list_obj]
         except Exception as ex:
             logger.error(f'Функция add_many в слое service. Ошибка получения данных \n{ex}\n')
-            return False
+            raise ValueError(f"func add_many in service. Error get data in schema \n{ex}\n")
 
-        resp = await self.repository.add_many(users_list)
-        if resp:
-            return users_list
-        return False
+        await self.repository.add_many(users_list)
+        return users_list
 
     async def update(self, list_users_data: UsersUpdateSchema) -> list | bool:
         """
@@ -52,7 +49,7 @@ class UsersService(BaseService):
             update_data = list_users_data.value
         except Exception as ex:
             logger.error(f'Функция update в слое service. Ошибка получения данных \n{ex}\n')
-            return False
+            raise ValueError(f"func update in service. Error get data in schema \n{ex}\n")
 
         response_db = await self.repository.update(update_data, filters)
         return response_db

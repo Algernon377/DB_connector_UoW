@@ -15,6 +15,6 @@ class BaseService:
             filters = filters.filters_dict
         except Exception as ex:
             logger.error(f'Функция find_many в слое service. Ошибка получения данных \n{ex}\n')
-            return False
+            raise ValueError(f"func find_many in service. Error get data in schema \n{ex}\n")
         rows = await self.repository.find_many(filters)
         return rows
