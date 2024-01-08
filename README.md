@@ -1,1 +1,1 @@
-# DB_connector_UoW
+Модуль для работы с базой данных. Реализованные патерны repository и Unit of work
